@@ -33,7 +33,7 @@ class EMustacheViewRenderer extends CApplicationComponent implements IViewRender
             $this->_m = new Mustache_Engine(CMap::mergeArray(
                     array(
                         'cache' => Yii::app()->getRuntimePath().DIRECTORY_SEPARATOR.'Mustache'.DIRECTORY_SEPARATOR.'cache',
-                        'partials_loader' => new Mustache_Loader_FilesystemLoader(Yii::getPathOfAlias($this->templatePathAlias),
+                        'partials_loader' => new Mustache_Loader_FilesystemLoader($this->getTemplatesPath(),
                             array('extension' => $this->fileExtension)),
                         'escape' => function($value) {
                             return CHtml::encode($value);
@@ -41,6 +41,22 @@ class EMustacheViewRenderer extends CApplicationComponent implements IViewRender
                         'charset' => Yii::app()->charset,
                     ),$this->mustacheOptions)
             );
+    }
+
+    private function getTemplatesPath()
+    {
+        $controller = Yii::app()->getController();
+        $viewPath = $controller->getViewPath();
+        
+        if (Yii::app()->getTheme() !== null) {
+            $viewPath = Yii::app()->getTheme()->getViewPath();
+        }
+        
+        if ($controller->getModule() !== null) {
+            $viewPath .= '/'. $controller->getModule()->getId();
+        }
+
+        return $viewPath;
     }
     
     /**
