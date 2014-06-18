@@ -6,7 +6,7 @@
  *       'class' => 'application.extensions.YiiMustache.YiiMustacheViewRenderer',
  *    )
  *
- * fork by https://github.com/PLoginoff/YiiMustache
+ * fork from https://github.com/PLoginoff/YiiMustache
  * 
  * @author Pavel "PLoginoff" <ploginoff@gmail.com>
  */
