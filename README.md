@@ -1,6 +1,4 @@
-//
-// fork by https://github.com/PLoginoff/YiiMustache
-//
+> fork from https://github.com/Haensel/EMustache
 
 #YiiMustache - Mustache templating for Yii
 
