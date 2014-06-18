@@ -5,13 +5,13 @@
  * @author Johannes "Haensel" Bauer <thehaensel@gmail.com>
  *
  */
-class EMustacheViewRenderer extends CApplicationComponent implements IViewRenderer
+class YiiMustacheViewRenderer extends CApplicationComponent implements IViewRenderer
 {
     /**
     * @var string the extension name of the view file. Defaults to '.mustache'.
     */
-    public $fileExtension='.mustache';
-    public $mustachePathAlias='ext.EMustache.vendor.Mustache.src.Mustache';
+    public $fileExtension     = '.mustache';
+    public $mustachePathAlias = 'ext.YiiMustache.vendor.Mustache.src.Mustache';
     public $templatePathAlias = 'application.views';
     
     public $mustacheOptions=array();

@@ -1,8 +1,12 @@
-#EMustache - Mustache templating for Yii
+//
+// fork by https://github.com/PLoginoff/YiiMustache
+//
+
+#YiiMustache - Mustache templating for Yii
 
 This extension is based on the excellent work of Justin Hileman aka. "bobthecow" => mustache.php at https://github.com/bobthecow/mustache.php
 The idea was to make mustache templating with Yii as easy as possible. It therefore uses the familiar Yii rendering syntax. In order to make
-this extension as fast as possible EMustache uses Mustache.php's built in caching functionality.
+this extension as fast as possible YiiMustache uses Mustache.php's built in caching functionality.
 By default these cached views are stored under /protected/runtime/Mustache/cache
 
 ##INSTALL:
@@ -12,7 +16,7 @@ By default these cached views are stored under /protected/runtime/Mustache/cache
 
 ~~~
 	        'viewRenderer' => array(
-                    'class' => 'application.extensions.EMustache.EMustacheViewRenderer',
+                    'class' => 'application.extensions.YiiMustache.YiiMustacheViewRenderer',
                 )
 ~~~
        		
@@ -22,7 +26,7 @@ By default these cached views are stored under /protected/runtime/Mustache/cache
 ~~~
 
                 'viewRenderer' => array(
-                    'class' => 'application.extensions.EMustache.EMustacheViewRenderer',
+                    'class' => 'application.extensions.YiiMustache.YiiMustacheViewRenderer',
                     'mustacheOptions'=>array(
                         'charset' => Yii::app()->charset
                     )
