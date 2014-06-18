@@ -3,7 +3,7 @@
 /*
  * This file is part of Mustache.php.
  *
- * (c) 2012 Justin Hileman
+ * (c) 2010-2014 Justin Hileman
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,6 +22,22 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends PHPUnit_Framework_TestCa
         $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
 
+    public function testTrailingSlashes()
+    {
+        $baseDir = dirname(__FILE__).'/../../../fixtures/templates/';
+        $loader = new Mustache_Loader_FilesystemLoader($baseDir);
+        $this->assertEquals('one contents', $loader->load('one'));
+    }
+
+    public function testConstructorWithProtocol()
+    {
+        $baseDir = realpath(dirname(__FILE__).'/../../../fixtures/templates');
+
+        $loader = new Mustache_Loader_FilesystemLoader('file://' . $baseDir, array('extension' => '.ms'));
+        $this->assertEquals('alpha contents', $loader->load('alpha'));
+        $this->assertEquals('beta contents', $loader->load('beta.ms'));
+    }
+
     public function testLoadTemplates()
     {
         $baseDir = realpath(dirname(__FILE__).'/../../../fixtures/templates');
@@ -30,16 +46,29 @@ class Mustache_Test_Loader_FilesystemLoaderTest extends PHPUnit_Framework_TestCa
         $this->assertEquals('two contents', $loader->load('two.mustache'));
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
-    public function testMissingBaseDirThrowsException()
+    public function testEmptyExtensionString()
     {
-        $loader = new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/not_a_directory');
+        $baseDir = realpath(dirname(__FILE__).'/../../../fixtures/templates');
+
+        $loader = new Mustache_Loader_FilesystemLoader($baseDir, array('extension' => ''));
+        $this->assertEquals('one contents', $loader->load('one.mustache'));
+        $this->assertEquals('alpha contents', $loader->load('alpha.ms'));
+
+        $loader = new Mustache_Loader_FilesystemLoader($baseDir, array('extension' => null));
+        $this->assertEquals('two contents', $loader->load('two.mustache'));
+        $this->assertEquals('beta contents', $loader->load('beta.ms'));
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException Mustache_Exception_RuntimeException
+     */
+    public function testMissingBaseDirThrowsException()
+    {
+        new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/not_a_directory');
+    }
+
+    /**
+     * @expectedException Mustache_Exception_UnknownTemplateException
      */
     public function testMissingTemplateThrowsException()
     {
