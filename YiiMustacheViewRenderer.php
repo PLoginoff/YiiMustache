@@ -1,20 +1,24 @@
 <?php
 /**
  * Mustache view renderer for the Yii PHP framework
- * 
- * @author Johannes "Haensel" Bauer <thehaensel@gmail.com>
  *
+ *    'viewRenderer' => array(
+ *       'class' => 'application.extensions.YiiMustache.YiiMustacheViewRenderer',
+ *    )
+ *
+ * fork by https://github.com/PLoginoff/YiiMustache
+ * 
+ * @author Pavel "PLoginoff" <ploginoff@gmail.com>
  */
 class YiiMustacheViewRenderer extends CApplicationComponent implements IViewRenderer
 {
     /**
     * @var string the extension name of the view file. Defaults to '.mustache'.
     */
-    public $fileExtension     = '.mustache';
-    public $mustachePathAlias = 'ext.YiiMustache.vendor.Mustache.src.Mustache';
-    public $templatePathAlias = 'application.views';
+    public $fileExtension       = '.mustache';
+    public $mustachePathAlias   = 'ext.YiiMustache.vendor.Mustache.src.Mustache';
     
-    public $mustacheOptions=array();
+    public $mustacheOptions     = array();
     
     private $_m;
     
@@ -45,17 +49,11 @@ class YiiMustacheViewRenderer extends CApplicationComponent implements IViewRend
 
     private function getTemplatesPath()
     {
-        $controller = Yii::app()->getController();
-        $viewPath = $controller->getViewPath();
-        
-        if (Yii::app()->getTheme() !== null) {
+        if ( Yii::app()->getTheme() !== null ) {
             $viewPath = Yii::app()->getTheme()->getViewPath();
+        } else {
+            $viewPath = Yii::app()->getController()->getViewPath();
         }
-        
-        if ($controller->getModule() !== null) {
-            $viewPath .= '/'. $controller->getModule()->getId();
-        }
-
         return $viewPath;
     }
     
@@ -70,16 +68,16 @@ class YiiMustacheViewRenderer extends CApplicationComponent implements IViewRend
     */
     public function renderFile($context,$sourceFile,$data,$return)
     {
-            if(!is_file($sourceFile) || ($file=realpath($sourceFile))===false)
+            if(!is_file($sourceFile) || ($file=realpath($sourceFile))===false) {
                     throw new CException(Yii::t('yii','View file "{file}" does not exist.',array('{file}'=>$sourceFile)));
+            }
 
             $rendered=$this->_m->render(file_get_contents($sourceFile),$data);
             
-            if($return)
-            {
+            if ( $return ) {
                 return $rendered;
-            }
-            else
+            } else {
                 echo $rendered;
+            }
     }
 }
