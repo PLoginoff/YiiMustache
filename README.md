@@ -156,3 +156,8 @@ Age: {{model.age}}
 ~~~
 
 Full mustache syntax: http://mustache.github.com/mustache.5.html
+
+
+
+[![Code Climate](https://codeclimate.com/github/PLoginoff/YiiMustache.png)](https://codeclimate.com/github/PLoginoff/YiiMustache)
+
